@@ -1,0 +1,173 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --font-display: "Space Grotesk";
+    --font-body: "Figtree";
+    --font-mono: "JetBrains Mono";
+    --radius: 0.75rem;
+
+    --background: 0.98 0.008 230;
+    --foreground: 0.18 0.015 230;
+    --card: 1.0 0.004 230;
+    --card-foreground: 0.18 0.015 230;
+    --popover: 1.0 0.004 230;
+    --popover-foreground: 0.18 0.015 230;
+
+    --primary: 0.48 0.16 250;
+    --primary-foreground: 0.98 0.004 250;
+
+    --secondary: 0.95 0.01 230;
+    --secondary-foreground: 0.28 0.015 230;
+    --muted: 0.94 0.01 230;
+    --muted-foreground: 0.5 0.012 230;
+
+    --accent: 0.6 0.15 170;
+    --accent-foreground: 0.98 0.004 170;
+
+    --destructive: 0.55 0.22 25;
+    --destructive-foreground: 0.98 0.004 25;
+
+    --border: 0.9 0.008 230;
+    --input: 0.9 0.008 230;
+    --ring: 0.48 0.16 250;
+
+    --chart-1: 0.48 0.16 250;
+    --chart-2: 0.6 0.15 170;
+    --chart-3: 0.65 0.18 145;
+    --chart-4: 0.7 0.15 85;
+    --chart-5: 0.55 0.22 25;
+
+    --sidebar: 0.48 0.16 250;
+    --sidebar-foreground: 0.98 0.004 250;
+    --sidebar-primary: 0.42 0.14 240;
+    --sidebar-primary-foreground: 0.98 0.004 240;
+    --sidebar-accent: 0.6 0.15 170;
+    --sidebar-accent-foreground: 0.18 0.015 250;
+    --sidebar-border: 0.36 0.12 250;
+    --sidebar-ring: 0.48 0.16 250;
+    --warning: 0.65 0.18 85;
+    --warning-foreground: 0.18 0.015 85;
+
+    --success: 0.6 0.15 170;
+    --success-foreground: 0.98 0.004 170;
+  }
+
+  .dark {
+    --background: 0.145 0.014 240;
+    --foreground: 0.95 0.01 240;
+    --card: 0.18 0.014 240;
+    --card-foreground: 0.95 0.01 240;
+    --popover: 0.18 0.014 240;
+    --popover-foreground: 0.95 0.01 240;
+
+    --primary: 0.75 0.15 250;
+    --primary-foreground: 0.145 0.014 240;
+
+    --secondary: 0.22 0.02 240;
+    --secondary-foreground: 0.85 0.01 240;
+    --muted: 0.22 0.02 240;
+    --muted-foreground: 0.55 0.01 240;
+
+    --accent: 0.65 0.14 170;
+    --accent-foreground: 0.145 0.014 240;
+
+    --destructive: 0.55 0.2 25;
+    --destructive-foreground: 0.95 0.01 240;
+
+    --border: 0.28 0.02 240;
+    --input: 0.28 0.02 240;
+    --ring: 0.75 0.15 250;
+
+    --chart-1: 0.75 0.15 250;
+    --chart-2: 0.65 0.14 170;
+    --chart-3: 0.6 0.16 145;
+    --chart-4: 0.72 0.15 85;
+    --chart-5: 0.55 0.2 25;
+
+    --sidebar: 0.145 0.014 240;
+    --sidebar-foreground: 0.95 0.01 240;
+    --sidebar-primary: 0.75 0.15 250;
+    --sidebar-primary-foreground: 0.145 0.014 240;
+    --sidebar-accent: 0.65 0.14 170;
+    --sidebar-accent-foreground: 0.95 0.01 240;
+    --sidebar-border: 0.28 0.02 240;
+    --sidebar-ring: 0.75 0.15 250;
+
+    --warning: 0.7 0.18 85;
+    --warning-foreground: 0.18 0.015 85;
+
+    --success: 0.65 0.14 170;
+    --success-foreground: 0.145 0.014 240;
+  }
+
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground font-body antialiased;
+  }
+}
+
+@layer utilities {
+  @font-face {
+    font-family: "Space Grotesk";
+    src: url("/assets/fonts/SpaceGrotesk.woff2") format("woff2");
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: "Figtree";
+    src: url("/assets/fonts/Figtree.woff2") format("woff2");
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: "JetBrains Mono";
+    src: url("/assets/fonts/JetBrainsMono.woff2") format("woff2");
+    font-display: swap;
+  }
+
+  .transition-smooth {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .card-elevated {
+    @apply rounded-lg bg-card border border-border shadow-md transition-smooth;
+  }
+
+  .btn-primary {
+    @apply rounded-lg bg-primary text-primary-foreground px-4 py-2 font-semibold transition-smooth hover:opacity-90 active:opacity-80;
+  }
+
+  .btn-secondary {
+    @apply rounded-lg bg-secondary text-secondary-foreground px-4 py-2 font-semibold transition-smooth hover:bg-muted active:opacity-80;
+  }
+
+  .btn-accent {
+    @apply rounded-lg bg-accent text-accent-foreground px-4 py-2 font-semibold transition-smooth hover:opacity-90 active:opacity-80;
+  }
+
+  .input-field {
+    @apply rounded-lg border border-input bg-background px-3 py-2 text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 transition-smooth;
+  }
+
+  /* Use when a left icon (w-5 h-5) is absolutely positioned at left-3 inside the input wrapper */
+  .input-field-icon {
+    @apply input-field pl-10;
+  }
+
+  .badge-success {
+    @apply inline-flex items-center rounded-full bg-success/15 px-2 py-1 text-xs font-semibold text-success;
+  }
+
+  .badge-warning {
+    @apply inline-flex items-center rounded-full bg-warning/15 px-2 py-1 text-xs font-semibold text-warning;
+  }
+
+  .badge-error {
+    @apply inline-flex items-center rounded-full bg-destructive/15 px-2 py-1 text-xs font-semibold text-destructive;
+  }
+}

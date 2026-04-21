@@ -1,0 +1,148 @@
+type Session = 
+ record {
+   createdAt: int;
+   role: Role;
+   token: text;
+   userId: text;
+ };
+type SampleStatus = 
+ variant {
+   processing;
+   reportReady;
+   sampleCollected;
+   sampleReceived;
+ };
+type Role = 
+ variant {
+   admin;
+   collectionCenter;
+ };
+type Report = 
+ record {
+   centerId: text;
+   filename: text;
+   id: nat;
+   patientId: text;
+   reportUrl: text;
+   uploadedAt: int;
+ };
+type PaymentStatus = 
+ variant {
+   paid;
+   pending;
+ };
+type PaymentPublic = 
+ record {
+   amount: nat;
+   centerId: text;
+   date: int;
+   id: nat;
+   invoiceNumber: text;
+   notes: text;
+   status: PaymentStatus;
+ };
+type PatientPublic = 
+ record {
+   age: nat;
+   bookingDate: int;
+   centerId: text;
+   gender: Gender;
+   id: text;
+   mobile: text;
+   name: text;
+   refDoctor: text;
+   status: SampleStatus;
+   testIds: vec nat;
+ };
+type LoginResult = 
+ variant {
+   err: text;
+   ok: Session;
+ };
+type LabTest = 
+ record {
+   category: text;
+   fastingRequired: bool;
+   id: nat;
+   mrpPrice: nat;
+   name: text;
+   partnerPrice: nat;
+   reportTime: text;
+   sampleType: text;
+   tubeType: text;
+ };
+type Gender = 
+ variant {
+   female;
+   male;
+   other;
+ };
+type CollectionCenterPublic = 
+ record {
+   address: text;
+   createdAt: int;
+   email: text;
+   id: text;
+   name: text;
+   ownerName: text;
+   phone: text;
+   status: CenterStatus;
+ };
+type CenterStatus = 
+ variant {
+   active;
+   inactive;
+ };
+type BookPatientRequest = 
+ record {
+   age: nat;
+   gender: Gender;
+   mobile: text;
+   name: text;
+   refDoctor: text;
+   testIds: vec nat;
+ };
+type BillingStats = 
+ record {
+   lastPayment: opt PaymentPublic;
+   totalCommission: nat;
+   totalTests: nat;
+ };
+service : {
+  addCenter: (token: text, id: text, name: text, ownerName: text, phone:
+   text, email: text, address: text, password: text) -> (bool);
+  addPayment: (token: text, centerId: text, amount: nat, invoiceNumber: 
+   text, notes: text) -> (nat);
+  addTest: (token: text, name: text, category: text, sampleType: text,
+   tubeType: text, fastingRequired: bool, reportTime: text, mrpPrice: 
+   nat, partnerPrice: nat) -> (nat);
+  bookPatient: (token: text, req: BookPatientRequest) -> (text);
+  deleteTest: (token: text, id: nat) -> (bool);
+  getBillingStats: (token: text, centerId: text) -> (BillingStats) query;
+  getCenterById: (token: text, id: text) ->
+   (opt CollectionCenterPublic) query;
+  getCenters: (token: text) -> (vec CollectionCenterPublic) query;
+  getMyCenter: (token: text) -> (opt CollectionCenterPublic) query;
+  getPatientByIdOrMobile: (token: text, searchQuery: text) ->
+   (opt PatientPublic) query;
+  getPatientsByCenter: (token: text) -> (vec PatientPublic) query;
+  getPaymentsByCenter: (token: text, centerId: text) ->
+   (vec PaymentPublic) query;
+  getReportsByCenter: (token: text, centerId: text, dateFrom: opt int,
+   dateTo: opt int) -> (vec Report) query;
+  getReportsByPatient: (token: text, patientId: text) -> (vec Report) query;
+  getTestById: (id: nat) -> (opt LabTest) query;
+  getTests: () -> (vec LabTest) query;
+  login: (userId: text, password: text) -> (LoginResult);
+  logout: (token: text) -> (bool);
+  markPaymentPaid: (token: text, paymentId: nat) -> (bool);
+  setCenterStatus: (token: text, id: text, active: bool) -> (bool);
+  updateCenter: (token: text, id: text, name: text, ownerName: text, phone:
+   text, email: text, address: text) -> (bool);
+  updateSampleStatus: (token: text, patientId: text, status: SampleStatus) ->
+   (opt PatientPublic);
+  updateTest: (token: text, test: LabTest) -> (bool);
+  uploadReport: (token: text, patientId: text, filename: text, reportUrl:
+   text) -> (nat);
+  validateSession: (token: text) -> (opt Session);
+}

@@ -1,0 +1,117 @@
+// Version: 1.0.0
+type CenterStatus__404857473 = {#active; #inactive};
+type CollectionCenter__387174571 =
+  {
+    address : Text;
+    createdAt : Int;
+    email : Text;
+    id : Text;
+    name : Text;
+    ownerName : Text;
+    phone : Text;
+    var status : CenterStatus__404857473
+  };
+type Data__791452850<K, V> =
+  {var count : Nat__490723111; kvs : [var ?(K, V)]};
+type Gender__352677779 = {#female; #male; #other};
+type Internal__8484328<K, V> =
+  {children : [var ?Node__46230540<K, V>]; data : Data__791452850<K, V>};
+type LabTest__203988835 =
+  {
+    category : Text;
+    fastingRequired : Bool;
+    id : Nat;
+    mrpPrice : Nat;
+    name : Text;
+    partnerPrice : Nat;
+    reportTime : Text;
+    sampleType : Text;
+    tubeType : Text
+  };
+type Leaf__809889148<K, V> = {data : Data__791452850<K, V>};
+type Nat__490723111 = Nat__920180692;
+type Nat__920180692 = Nat;
+type Node__46230540<K, V> =
+  {#internal : Internal__8484328<K, V>; #leaf : Leaf__809889148<K, V>};
+type Patient__512300474 =
+  {
+    age : Nat;
+    bookingDate : Int;
+    centerId : Text;
+    gender : Gender__352677779;
+    id : Text;
+    mobile : Text;
+    name : Text;
+    refDoctor : Text;
+    var status : SampleStatus__641177622;
+    testIds : [Nat]
+  };
+type PaymentStatus__671551282 = {#paid; #pending};
+type Payment__64787808 =
+  {
+    amount : Nat;
+    centerId : Text;
+    date : Int;
+    id : Nat;
+    invoiceNumber : Text;
+    notes : Text;
+    var status : PaymentStatus__671551282
+  };
+type Report__953667835 =
+  {
+    centerId : Text;
+    filename : Text;
+    id : Nat;
+    patientId : Text;
+    reportUrl : Text;
+    uploadedAt : Int
+  };
+type Role__490071529 = {#admin; #collectionCenter};
+type SampleStatus__641177622 =
+  {#processing; #reportReady; #sampleCollected; #sampleReceived};
+type Session__71599859 =
+  {createdAt : Int; role : Role__490071529; token : Text; userId : Text};
+type User__455962502 =
+  {id : Text; var passwordHash : Text; role : Role__490071529};
+actor {
+  stable centers :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?CollectionCenter__387174571]];
+      var elementIndex : Nat__490723111
+    };
+  stable patients :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?Patient__512300474]];
+      var elementIndex : Nat__490723111
+    };
+  stable payments :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?Payment__64787808]];
+      var elementIndex : Nat__490723111
+    };
+  stable reports :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?Report__953667835]];
+      var elementIndex : Nat__490723111
+    };
+  stable sessions :
+    {
+      var root : Node__46230540<Text, Session__71599859>;
+      var size : Nat__490723111
+    };
+  stable tests :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?LabTest__203988835]];
+      var elementIndex : Nat__490723111
+    };
+  stable users :
+    {
+      var root : Node__46230540<Text, User__455962502>;
+      var size : Nat__490723111
+    }
+};
