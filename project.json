@@ -1,27 +1,24 @@
 {
-  "overview": "Mediyra Lab is a B2B partner web app for pathology laboratory collection centers. Collection center owners can log in, book patient tests, track sample statuses, download reports, view earnings, and contact support. Admins manage collection centers, test catalog, pricing, reports, and payments through a dedicated dashboard.",
+  "overview": "Mediyra Lab is a B2B pathology lab platform for collection center owners to book patient tests, track samples, download reports, and manage billing. The admin panel gives lab staff full control over centers, tests, bookings, reports, payments, and analytics.",
   "features": [
-    "Collection center login with role-based access (partner vs admin)",
-    "Dashboard with 6 menu cards for quick navigation",
-    "Test price catalog with search and detailed test info",
-    "Patient test booking with auto-generated Patient ID and QR code",
-    "Sample tracking with 4-stage status timeline",
-    "Report download and sharing",
-    "Billing and earnings summary with payment history",
-    "Admin dashboard for managing centers, tests, reports, and payments",
-    "QR code generation for sample tracking",
-    "Mobile-first responsive design with medical blue/white theme"
+    "Admin dashboard with live stats (total bookings, today's samples, pending reports, monthly revenue)",
+    "Full booking/sample management with status updates and PDF report upload",
+    "Collection center management with credentials and pricing",
+    "Test catalog management (add/edit/delete)",
+    "Payment management with invoice generation",
+    "Analytics: daily bookings, test-wise revenue, partner performance",
+    "Redesigned login pages (collection center + admin) with clean medical UI",
+    "Role-based access control (admin vs collection center)"
   ],
   "category": "healthcare",
   "tags": [
     "pathology",
     "lab",
     "b2b",
-    "collection-center",
+    "admin-panel",
     "medical",
-    "sample-tracking",
-    "reports",
+    "bookings",
     "healthcare"
   ],
-  "last_updated": "2026-04-19T01:53:27.726Z"
+  "last_updated": "2026-04-22T02:02:21.851Z"
 }

@@ -22,6 +22,14 @@ const TrackSamplePage = lazy(() => import("./pages/TrackSamplePage"));
 const ReportsPage = lazy(() => import("./pages/ReportsPage"));
 const BillingPage = lazy(() => import("./pages/BillingPage"));
 const SupportPage = lazy(() => import("./pages/SupportPage"));
+// Admin pages
+const AdminDashboardPage = lazy(
+  () => import("./pages/admin/AdminDashboardPage"),
+);
+const AdminBookingsPage = lazy(() => import("./pages/admin/AdminBookingsPage"));
+const AdminAnalyticsPage = lazy(
+  () => import("./pages/admin/AdminAnalyticsPage"),
+);
 const AdminCentersPage = lazy(() => import("./pages/admin/AdminCentersPage"));
 const AdminTestsPage = lazy(() => import("./pages/admin/AdminTestsPage"));
 const AdminReportsPage = lazy(() => import("./pages/admin/AdminReportsPage"));
@@ -40,7 +48,7 @@ function RequireAuth({
     throw redirect({ to: "/dashboard" });
   }
   if (!adminOnly && user.role === Role.admin) {
-    throw redirect({ to: "/admin/centers" });
+    throw redirect({ to: "/admin/dashboard" });
   }
   return <>{children}</>;
 }
@@ -139,6 +147,36 @@ const supportRoute = createRoute({
 });
 
 // Admin routes
+const adminDashboardRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/admin/dashboard",
+  component: () => (
+    <RequireAuth adminOnly>
+      <AdminDashboardPage />
+    </RequireAuth>
+  ),
+});
+
+const adminBookingsRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/admin/bookings",
+  component: () => (
+    <RequireAuth adminOnly>
+      <AdminBookingsPage />
+    </RequireAuth>
+  ),
+});
+
+const adminAnalyticsRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/admin/analytics",
+  component: () => (
+    <RequireAuth adminOnly>
+      <AdminAnalyticsPage />
+    </RequireAuth>
+  ),
+});
+
 const adminCentersRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/admin/centers",
@@ -200,6 +238,9 @@ const routeTree = rootRoute.addChildren([
   reportsRoute,
   billingRoute,
   supportRoute,
+  adminDashboardRoute,
+  adminBookingsRoute,
+  adminAnalyticsRoute,
   adminCentersRoute,
   adminTestsRoute,
   adminReportsRoute,

@@ -77,6 +77,13 @@ type Gender =
    male;
    other;
  };
+type DashboardStats = 
+ record {
+   pendingReports: nat;
+   thisMonthRevenue: nat;
+   todaysSamples: nat;
+   totalBookings: nat;
+ };
 type CollectionCenterPublic = 
  record {
    address: text;
@@ -118,10 +125,12 @@ service : {
    nat, partnerPrice: nat) -> (nat);
   bookPatient: (token: text, req: BookPatientRequest) -> (text);
   deleteTest: (token: text, id: nat) -> (bool);
+  getAllPatients: (token: text) -> (vec PatientPublic) query;
   getBillingStats: (token: text, centerId: text) -> (BillingStats) query;
   getCenterById: (token: text, id: text) ->
    (opt CollectionCenterPublic) query;
   getCenters: (token: text) -> (vec CollectionCenterPublic) query;
+  getDashboardStats: (token: text) -> (DashboardStats) query;
   getMyCenter: (token: text) -> (opt CollectionCenterPublic) query;
   getPatientByIdOrMobile: (token: text, searchQuery: text) ->
    (opt PatientPublic) query;

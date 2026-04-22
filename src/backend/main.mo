@@ -16,6 +16,7 @@ import CentersMixin "mixins/centers-api";
 import PatientsMixin "mixins/patients-api";
 import ReportsMixin "mixins/reports-api";
 import BillingMixin "mixins/billing-api";
+import AnalyticsMixin "mixins/analytics-api";
 
 actor {
   // Auth state
@@ -50,4 +51,5 @@ actor {
   include PatientsMixin(patients, sessions);
   include ReportsMixin(reports, patients, sessions);
   include BillingMixin(payments, patients, sessions);
+  include AnalyticsMixin(patients, payments, sessions);
 };

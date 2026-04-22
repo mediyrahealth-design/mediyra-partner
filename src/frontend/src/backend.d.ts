@@ -54,6 +54,12 @@ export interface Report {
     centerId: string;
     uploadedAt: bigint;
 }
+export interface DashboardStats {
+    todaysSamples: bigint;
+    pendingReports: bigint;
+    totalBookings: bigint;
+    thisMonthRevenue: bigint;
+}
 export interface LabTest {
     id: bigint;
     mrpPrice: bigint;
@@ -112,9 +118,11 @@ export interface backendInterface {
     addTest(token: string, name: string, category: string, sampleType: string, tubeType: string, fastingRequired: boolean, reportTime: string, mrpPrice: bigint, partnerPrice: bigint): Promise<bigint>;
     bookPatient(token: string, req: BookPatientRequest): Promise<string>;
     deleteTest(token: string, id: bigint): Promise<boolean>;
+    getAllPatients(token: string): Promise<Array<PatientPublic>>;
     getBillingStats(token: string, centerId: string): Promise<BillingStats>;
     getCenterById(token: string, id: string): Promise<CollectionCenterPublic | null>;
     getCenters(token: string): Promise<Array<CollectionCenterPublic>>;
+    getDashboardStats(token: string): Promise<DashboardStats>;
     getMyCenter(token: string): Promise<CollectionCenterPublic | null>;
     getPatientByIdOrMobile(token: string, searchQuery: string): Promise<PatientPublic | null>;
     getPatientsByCenter(token: string): Promise<Array<PatientPublic>>;

@@ -36,4 +36,10 @@ mixin (
     let _ = AuthLib.requireAdmin(sessions, token);
     PatientsLib.updateSampleStatus(patients, patientId, status);
   };
+
+  /// Returns ALL patients across ALL collection centers. Admin-only.
+  public query func getAllPatients(token : Text) : async [PatientTypes.PatientPublic] {
+    let _session = AuthLib.requireAdmin(sessions, token);
+    patients.map<PatientTypes.Patient, PatientTypes.PatientPublic>(PatientsLib.toPublic).toArray();
+  };
 };

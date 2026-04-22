@@ -4,6 +4,7 @@ import type {
   BillingStats,
   BookPatientRequest,
   CollectionCenterPublic,
+  DashboardStats,
   LabTest,
   LoginResult,
   PatientPublic,
@@ -79,6 +80,22 @@ export function useApiService() {
   ): Promise<PatientPublic[]> => {
     if (!actor) return [];
     return actor.getPatientsByCenter(token);
+  };
+
+  const getAllPatients = async (token: string): Promise<PatientPublic[]> => {
+    // Placeholder: will be wired once backend exposes getAllPatients
+    if (!actor) return [];
+    try {
+      const centers = await actor.getCenters(token);
+      const results = await Promise.all(
+        centers.map(() =>
+          actor.getPatientsByCenter(token).catch(() => [] as PatientPublic[]),
+        ),
+      );
+      return results.flat();
+    } catch {
+      return [];
+    }
   };
 
   const getReportsByCenter = async (
@@ -239,6 +256,26 @@ export function useApiService() {
     return actor.markPaymentPaid(token, paymentId);
   };
 
+  const uploadReport = async (
+    token: string,
+    patientId: string,
+    filename: string,
+    reportUrl: string,
+  ): Promise<bigint> => {
+    if (!actor) throw new Error("Actor not ready");
+    return actor.uploadReport(token, patientId, filename, reportUrl);
+  };
+
+  const getDashboardStats = async (_token: string): Promise<DashboardStats> => {
+    // Returns placeholder stats — backend getDashboardStats not yet implemented
+    return {
+      totalBookings: 0,
+      todaysSamples: 0,
+      pendingReports: 0,
+      thisMonthRevenue: 0,
+    };
+  };
+
   return {
     login,
     logout,
@@ -250,6 +287,7 @@ export function useApiService() {
     bookPatient,
     trackSample,
     getPatientsByCenter,
+    getAllPatients,
     getReportsByCenter,
     getReportsByPatient,
     getBillingStats,
@@ -263,5 +301,7 @@ export function useApiService() {
     deleteTest,
     addPayment,
     markPaymentPaid,
+    uploadReport,
+    getDashboardStats,
   };
 }

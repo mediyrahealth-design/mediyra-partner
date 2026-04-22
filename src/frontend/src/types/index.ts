@@ -44,3 +44,10 @@ export interface NavItem {
   path: string;
   icon: string;
 }
+
+export interface DashboardStats {
+  totalBookings: number;
+  todaysSamples: number;
+  pendingReports: number;
+  thisMonthRevenue: number;
+}

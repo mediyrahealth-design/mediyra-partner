@@ -90,6 +90,7 @@ export default {
         subtle: "0 2px 8px 0 rgba(72, 126, 176, 0.08)",
         md: "0 4px 12px 0 rgba(72, 126, 176, 0.12)",
         card: "0 2px 6px 0 rgba(72, 126, 176, 0.1)",
+        elevated: "0 8px 16px 0 rgba(72, 126, 176, 0.14)",
       },
       keyframes: {
         "accordion-down": {

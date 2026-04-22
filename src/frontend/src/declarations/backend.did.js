@@ -21,6 +21,24 @@ export const BookPatientRequest = IDL.Record({
   'testIds' : IDL.Vec(IDL.Nat),
   'mobile' : IDL.Text,
 });
+export const SampleStatus = IDL.Variant({
+  'sampleReceived' : IDL.Null,
+  'sampleCollected' : IDL.Null,
+  'reportReady' : IDL.Null,
+  'processing' : IDL.Null,
+});
+export const PatientPublic = IDL.Record({
+  'id' : IDL.Text,
+  'age' : IDL.Nat,
+  'status' : SampleStatus,
+  'name' : IDL.Text,
+  'refDoctor' : IDL.Text,
+  'centerId' : IDL.Text,
+  'bookingDate' : IDL.Int,
+  'gender' : Gender,
+  'testIds' : IDL.Vec(IDL.Nat),
+  'mobile' : IDL.Text,
+});
 export const PaymentStatus = IDL.Variant({
   'pending' : IDL.Null,
   'paid' : IDL.Null,
@@ -53,23 +71,11 @@ export const CollectionCenterPublic = IDL.Record({
   'address' : IDL.Text,
   'phone' : IDL.Text,
 });
-export const SampleStatus = IDL.Variant({
-  'sampleReceived' : IDL.Null,
-  'sampleCollected' : IDL.Null,
-  'reportReady' : IDL.Null,
-  'processing' : IDL.Null,
-});
-export const PatientPublic = IDL.Record({
-  'id' : IDL.Text,
-  'age' : IDL.Nat,
-  'status' : SampleStatus,
-  'name' : IDL.Text,
-  'refDoctor' : IDL.Text,
-  'centerId' : IDL.Text,
-  'bookingDate' : IDL.Int,
-  'gender' : Gender,
-  'testIds' : IDL.Vec(IDL.Nat),
-  'mobile' : IDL.Text,
+export const DashboardStats = IDL.Record({
+  'todaysSamples' : IDL.Nat,
+  'pendingReports' : IDL.Nat,
+  'totalBookings' : IDL.Nat,
+  'thisMonthRevenue' : IDL.Nat,
 });
 export const Report = IDL.Record({
   'id' : IDL.Nat,
@@ -139,6 +145,7 @@ export const idlService = IDL.Service({
     ),
   'bookPatient' : IDL.Func([IDL.Text, BookPatientRequest], [IDL.Text], []),
   'deleteTest' : IDL.Func([IDL.Text, IDL.Nat], [IDL.Bool], []),
+  'getAllPatients' : IDL.Func([IDL.Text], [IDL.Vec(PatientPublic)], ['query']),
   'getBillingStats' : IDL.Func([IDL.Text, IDL.Text], [BillingStats], ['query']),
   'getCenterById' : IDL.Func(
       [IDL.Text, IDL.Text],
@@ -150,6 +157,7 @@ export const idlService = IDL.Service({
       [IDL.Vec(CollectionCenterPublic)],
       ['query'],
     ),
+  'getDashboardStats' : IDL.Func([IDL.Text], [DashboardStats], ['query']),
   'getMyCenter' : IDL.Func(
       [IDL.Text],
       [IDL.Opt(CollectionCenterPublic)],
@@ -221,6 +229,24 @@ export const idlFactory = ({ IDL }) => {
     'testIds' : IDL.Vec(IDL.Nat),
     'mobile' : IDL.Text,
   });
+  const SampleStatus = IDL.Variant({
+    'sampleReceived' : IDL.Null,
+    'sampleCollected' : IDL.Null,
+    'reportReady' : IDL.Null,
+    'processing' : IDL.Null,
+  });
+  const PatientPublic = IDL.Record({
+    'id' : IDL.Text,
+    'age' : IDL.Nat,
+    'status' : SampleStatus,
+    'name' : IDL.Text,
+    'refDoctor' : IDL.Text,
+    'centerId' : IDL.Text,
+    'bookingDate' : IDL.Int,
+    'gender' : Gender,
+    'testIds' : IDL.Vec(IDL.Nat),
+    'mobile' : IDL.Text,
+  });
   const PaymentStatus = IDL.Variant({
     'pending' : IDL.Null,
     'paid' : IDL.Null,
@@ -253,23 +279,11 @@ export const idlFactory = ({ IDL }) => {
     'address' : IDL.Text,
     'phone' : IDL.Text,
   });
-  const SampleStatus = IDL.Variant({
-    'sampleReceived' : IDL.Null,
-    'sampleCollected' : IDL.Null,
-    'reportReady' : IDL.Null,
-    'processing' : IDL.Null,
-  });
-  const PatientPublic = IDL.Record({
-    'id' : IDL.Text,
-    'age' : IDL.Nat,
-    'status' : SampleStatus,
-    'name' : IDL.Text,
-    'refDoctor' : IDL.Text,
-    'centerId' : IDL.Text,
-    'bookingDate' : IDL.Int,
-    'gender' : Gender,
-    'testIds' : IDL.Vec(IDL.Nat),
-    'mobile' : IDL.Text,
+  const DashboardStats = IDL.Record({
+    'todaysSamples' : IDL.Nat,
+    'pendingReports' : IDL.Nat,
+    'totalBookings' : IDL.Nat,
+    'thisMonthRevenue' : IDL.Nat,
   });
   const Report = IDL.Record({
     'id' : IDL.Nat,
@@ -339,6 +353,11 @@ export const idlFactory = ({ IDL }) => {
       ),
     'bookPatient' : IDL.Func([IDL.Text, BookPatientRequest], [IDL.Text], []),
     'deleteTest' : IDL.Func([IDL.Text, IDL.Nat], [IDL.Bool], []),
+    'getAllPatients' : IDL.Func(
+        [IDL.Text],
+        [IDL.Vec(PatientPublic)],
+        ['query'],
+      ),
     'getBillingStats' : IDL.Func(
         [IDL.Text, IDL.Text],
         [BillingStats],
@@ -354,6 +373,7 @@ export const idlFactory = ({ IDL }) => {
         [IDL.Vec(CollectionCenterPublic)],
         ['query'],
       ),
+    'getDashboardStats' : IDL.Func([IDL.Text], [DashboardStats], ['query']),
     'getMyCenter' : IDL.Func(
         [IDL.Text],
         [IDL.Opt(CollectionCenterPublic)],

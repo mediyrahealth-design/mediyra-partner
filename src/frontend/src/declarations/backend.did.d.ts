@@ -35,6 +35,12 @@ export interface CollectionCenterPublic {
   'address' : string,
   'phone' : string,
 }
+export interface DashboardStats {
+  'todaysSamples' : bigint,
+  'pendingReports' : bigint,
+  'totalBookings' : bigint,
+  'thisMonthRevenue' : bigint,
+}
 export type Gender = { 'other' : null } |
   { 'female' : null } |
   { 'male' : null };
@@ -106,12 +112,14 @@ export interface _SERVICE {
   >,
   'bookPatient' : ActorMethod<[string, BookPatientRequest], string>,
   'deleteTest' : ActorMethod<[string, bigint], boolean>,
+  'getAllPatients' : ActorMethod<[string], Array<PatientPublic>>,
   'getBillingStats' : ActorMethod<[string, string], BillingStats>,
   'getCenterById' : ActorMethod<
     [string, string],
     [] | [CollectionCenterPublic]
   >,
   'getCenters' : ActorMethod<[string], Array<CollectionCenterPublic>>,
+  'getDashboardStats' : ActorMethod<[string], DashboardStats>,
   'getMyCenter' : ActorMethod<[string], [] | [CollectionCenterPublic]>,
   'getPatientByIdOrMobile' : ActorMethod<
     [string, string],
